@@ -24,7 +24,7 @@ let login = localStorage.getItem('gloDelivery');
 
 function toogleModalAuth() {
   modalAuth.classList.toggle('is-open');
-  
+  loginInput.style.borderColor = '';
 }
 
 function authorized(){
@@ -52,20 +52,35 @@ function notAuthorized(){
 
   function logIn(event){
     event.preventDefault();
-    login = loginInput.value;
-
-    localStorage.setItem('gloDelivery',login);
-
-    toogleModalAuth();
-    buttonAuth.removeEventListener('click', toogleModalAuth);
-    closeAuth.removeEventListener('click', toogleModalAuth);
-    logInForm.removeEventListener('submit', logIn);
-    logInForm.reset();
-    checkAuth();
+        
+    //dz 41 min intensiv
+    
+    if(loginInput.value.trim()){
+      login = loginInput.value;
+      localStorage.setItem('gloDelivery',login);
+      toogleModalAuth();
+     
+      buttonAuth.removeEventListener('click', toogleModalAuth);
+      closeAuth.removeEventListener('click', toogleModalAuth);
+      logInForm.removeEventListener('submit', logIn);
+      logInForm.reset();
+      checkAuth();
+    }else{
+      loginInput.style.borderColor = '#ff0000';
+      loginInput.value = '';
+      alert('login?');
+    }
+    
   }
   buttonAuth.addEventListener('click', toogleModalAuth);
   closeAuth.addEventListener('click', toogleModalAuth);
   logInForm.addEventListener('submit', logIn);
+  //53 min intensiv mimo_modal_window_close
+  modalAuth.addEventListener('click',function(event){
+    if(event.target.classList.contains('is-open')){
+      toogleModalAuth()
+    }
+  })
 }
 
 function checkAuth(){
@@ -76,3 +91,4 @@ function checkAuth(){
   }
 }
 checkAuth();
+
